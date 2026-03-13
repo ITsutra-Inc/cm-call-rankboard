@@ -67,7 +67,7 @@ router.get('/', async (req, res) => {
       twilioStats = await fetchTwilioCalls(dateFrom, dateTo);
     } catch (err) {
       console.error('Twilio fetch failed:', err.message);
-      twilioStats = { name: 'Suvash AI', candidates: 'Twilio', outgoing: 0, incoming: 0, missed: 0, totalSeconds: 0, totalMinutes: 0 };
+      twilioStats = { name: 'Suvash', candidates: 'Twilio', outgoing: 0, incoming: 0, missed: 0, totalSeconds: 0, totalMinutes: 0 };
     }
 
     // Try RingCentral, fall back to cache if rate limited

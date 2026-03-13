@@ -1,7 +1,7 @@
 import './LeaderboardMini.css';
 
 const AVATARS = {
-  'Suvash AI': '/avatars/suvash.webp',
+  'Suvash': '/avatars/suvash.webp',
   'Sid': '/avatars/sid.png',
   'Paul': '/avatars/paul.webp',
 };

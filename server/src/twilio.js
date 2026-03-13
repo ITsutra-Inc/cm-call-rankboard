@@ -36,7 +36,7 @@ async function fetchTwilioCalls(dateFrom, dateTo) {
   }
 
   return {
-    name: 'Suvash AI',
+    name: 'Suvash',
     candidates: 'Twilio',
     outgoing,
     incoming,
