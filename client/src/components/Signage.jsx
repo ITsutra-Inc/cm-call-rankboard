@@ -113,15 +113,17 @@ export default function Signage() {
             {silver?.totalMinutes?.toFixed(1)} <span className="min-label">min</span>
           </div>
           <div className="podium-stats">
-            <div className="stat-item">
+            <div className="stat-item stat-item-out">
               <span className="stat-value">{silver?.outgoing}</span>
               <span className="stat-label">Out</span>
+              <span className="stat-minutes">{silver?.outgoingMinutes?.toFixed(1)} min</span>
             </div>
-            <div className="stat-item">
+            <div className="stat-item stat-item-in">
               <span className="stat-value">{silver?.incoming}</span>
               <span className="stat-label">In</span>
+              <span className="stat-minutes">{silver?.incomingMinutes?.toFixed(1)} min</span>
             </div>
-            <div className="stat-item">
+            <div className="stat-item stat-item-missed">
               <span className="stat-value">{silver?.missed}</span>
               <span className="stat-label">Missed</span>
             </div>
@@ -148,15 +150,17 @@ export default function Signage() {
             {gold?.totalMinutes?.toFixed(1)} <span className="min-label">min</span>
           </div>
           <div className="podium-stats">
-            <div className="stat-item">
+            <div className="stat-item stat-item-out">
               <span className="stat-value">{gold?.outgoing}</span>
               <span className="stat-label">Out</span>
+              <span className="stat-minutes">{gold?.outgoingMinutes?.toFixed(1)} min</span>
             </div>
-            <div className="stat-item">
+            <div className="stat-item stat-item-in">
               <span className="stat-value">{gold?.incoming}</span>
               <span className="stat-label">In</span>
+              <span className="stat-minutes">{gold?.incomingMinutes?.toFixed(1)} min</span>
             </div>
-            <div className="stat-item">
+            <div className="stat-item stat-item-missed">
               <span className="stat-value">{gold?.missed}</span>
               <span className="stat-label">Missed</span>
             </div>
@@ -182,15 +186,17 @@ export default function Signage() {
             {bronze?.totalMinutes?.toFixed(1)} <span className="min-label">min</span>
           </div>
           <div className="podium-stats">
-            <div className="stat-item">
+            <div className="stat-item stat-item-out">
               <span className="stat-value">{bronze?.outgoing}</span>
               <span className="stat-label">Out</span>
+              <span className="stat-minutes">{bronze?.outgoingMinutes?.toFixed(1)} min</span>
             </div>
-            <div className="stat-item">
+            <div className="stat-item stat-item-in">
               <span className="stat-value">{bronze?.incoming}</span>
               <span className="stat-label">In</span>
+              <span className="stat-minutes">{bronze?.incomingMinutes?.toFixed(1)} min</span>
             </div>
-            <div className="stat-item">
+            <div className="stat-item stat-item-missed">
               <span className="stat-value">{bronze?.missed}</span>
               <span className="stat-label">Missed</span>
             </div>

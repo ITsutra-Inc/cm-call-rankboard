@@ -20,6 +20,8 @@ function aggregateByManager(records, phoneToExtMap = {}) {
       incoming: 0,
       missed: 0,
       totalSeconds: 0,
+      outgoingSeconds: 0,
+      incomingSeconds: 0,
     };
   }
 
@@ -53,17 +55,21 @@ function aggregateByManager(records, phoneToExtMap = {}) {
     if (record.direction === 'Outbound') {
       s.outgoing++;
       s.totalSeconds += record.duration || 0;
+      s.outgoingSeconds += record.duration || 0;
     } else if (record.result === 'Missed' || record.result === 'Voicemail' || record.result === 'No Answer') {
       s.missed++;
     } else {
       s.incoming++;
       s.totalSeconds += record.duration || 0;
+      s.incomingSeconds += record.duration || 0;
     }
   }
 
   return Object.values(stats).map((s) => ({
     ...s,
     totalMinutes: Math.round(s.totalSeconds / 6) / 10,
+    outgoingMinutes: Math.round(s.outgoingSeconds / 6) / 10,
+    incomingMinutes: Math.round(s.incomingSeconds / 6) / 10,
   }));
 }
 

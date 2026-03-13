@@ -13,24 +13,27 @@ async function fetchTwilioCalls(dateFrom, dateTo) {
   let incoming = 0;
   let missed = 0;
   let totalSeconds = 0;
+  let outgoingSeconds = 0;
+  let incomingSeconds = 0;
 
   for (const call of calls) {
-    const direction = call.direction; // inbound, outbound-dial, outbound-api
-    const status = call.status; // completed, no-answer, busy, failed, canceled
+    const direction = call.direction;
+    const status = call.status;
     const duration = parseInt(call.duration, 10) || 0;
 
     if (direction === 'inbound') {
       if (status === 'completed') {
         incoming++;
         totalSeconds += duration;
+        incomingSeconds += duration;
       } else if (status === 'no-answer' || status === 'busy' || status === 'canceled') {
         missed++;
       }
     } else {
-      // outbound-dial or outbound-api
       if (status === 'completed') {
         outgoing++;
         totalSeconds += duration;
+        outgoingSeconds += duration;
       }
     }
   }
@@ -43,6 +46,10 @@ async function fetchTwilioCalls(dateFrom, dateTo) {
     missed,
     totalSeconds,
     totalMinutes: Math.round(totalSeconds / 6) / 10,
+    outgoingSeconds,
+    incomingSeconds,
+    outgoingMinutes: Math.round(outgoingSeconds / 6) / 10,
+    incomingMinutes: Math.round(incomingSeconds / 6) / 10,
   };
 }
 
