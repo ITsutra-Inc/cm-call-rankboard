@@ -1,15 +1,42 @@
 /* ===== SIGNAGE - COMPETITIVE LEADERBOARD ===== */
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Russo+One&display=swap');
+
 .signage {
   height: 100vh;
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1040 40%, #0d1333 100%);
+  background: #020617;
   color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Chakra Petch', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   overflow: hidden;
   padding: 30px 20px;
+}
+
+/* Layered background with light sources */
+.signage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 215, 0, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(99, 102, 241, 0.04) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0e27 0%, #1a1040 40%, #0d1333 100%);
+  z-index: 0;
+}
+
+/* Subtle grid overlay */
+.signage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: 0;
+  pointer-events: none;
 }
 
 /* Background particles */
@@ -26,11 +53,22 @@
 .particle {
   position: absolute;
   bottom: -10px;
-  width: 4px;
-  height: 4px;
-  background: rgba(255, 215, 0, 0.4);
+  width: 3px;
+  height: 3px;
+  background: rgba(255, 215, 0, 0.5);
   border-radius: 50%;
   animation: float-up linear infinite;
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.3);
+}
+
+.particle:nth-child(3n) {
+  background: rgba(99, 102, 241, 0.35);
+  box-shadow: 0 0 6px rgba(99, 102, 241, 0.25);
+}
+
+.particle:nth-child(5n) {
+  background: rgba(192, 192, 192, 0.35);
+  box-shadow: 0 0 6px rgba(192, 192, 192, 0.25);
 }
 
 @keyframes float-up {
@@ -62,24 +100,34 @@
 }
 
 .signage-title {
-  font-size: 42px;
-  font-weight: 800;
-  background: linear-gradient(135deg, #ffd700, #ffaa00, #ffd700);
+  font-family: 'Russo One', sans-serif;
+  font-size: 44px;
+  font-weight: 400;
+  background: linear-gradient(135deg, #ffd700 0%, #ffaa00 40%, #ffe066 60%, #ffd700 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: 4px;
   margin: 0;
-  text-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+  filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.2));
 }
 
 .signage-subtitle {
-  color: #7b8cad;
-  font-size: 16px;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 500;
   margin-top: 8px;
-  letter-spacing: 2px;
+  letter-spacing: 4px;
   text-transform: uppercase;
+}
+
+.signage-clock {
+  font-family: 'Chakra Petch', monospace;
+  font-size: 13px;
+  color: #475569;
+  letter-spacing: 2px;
+  margin-top: 6px;
 }
 
 .signage-period-tabs {
@@ -89,15 +137,18 @@
 }
 
 .period-tab {
-  padding: 8px 24px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.05);
-  color: #8892b0;
+  font-family: 'Chakra Petch', sans-serif;
+  padding: 8px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: #64748b;
   border-radius: 20px;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s;
-  letter-spacing: 1px;
+  transition: all 0.25s ease;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
 }
 
 .period-tab:hover {
@@ -106,9 +157,10 @@
 }
 
 .period-tab.active {
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 170, 0, 0.1));
-  border-color: #ffd700;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 170, 0, 0.08));
+  border-color: rgba(255, 215, 0, 0.5);
   color: #ffd700;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.1), inset 0 1px 0 rgba(255, 215, 0, 0.1);
 }
 
 /* Podium Section */
@@ -252,17 +304,19 @@
 
 /* Medal Label */
 .medal-label {
-  font-size: 12px;
-  font-weight: 700;
+  font-family: 'Russo One', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
   letter-spacing: 3px;
-  padding: 4px 16px;
-  border-radius: 12px;
+  padding: 4px 18px;
+  border-radius: 6px;
   margin-bottom: 8px;
 }
 
 .gold-label {
   background: linear-gradient(135deg, #ffd700, #ffaa00);
   color: #1a1040;
+  box-shadow: 0 2px 12px rgba(255, 215, 0, 0.3);
 }
 
 .silver-label {
@@ -290,29 +344,35 @@
 
 /* Minutes */
 .podium-minutes {
-  font-size: 40px;
-  font-weight: 800;
-  margin-bottom: 16px;
+  font-family: 'Russo One', sans-serif;
+  font-size: 38px;
+  font-weight: 400;
+  margin-bottom: 14px;
+  letter-spacing: 1px;
 }
 
 .min-label {
-  font-size: 18px;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 16px;
   font-weight: 500;
-  opacity: 0.85;
+  opacity: 0.7;
 }
 
 .gold-minutes {
-  font-size: 52px;
+  font-size: 48px;
   color: #ffd700;
-  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.4));
+  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.4));
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
 }
 
 .silver-minutes {
   color: #c0c0c0;
+  text-shadow: 0 0 15px rgba(192, 192, 192, 0.12);
 }
 
 .bronze-minutes {
   color: #cd7f32;
+  text-shadow: 0 0 15px rgba(205, 127, 50, 0.12);
 }
 
 /* Stats Row */
@@ -324,22 +384,52 @@
 
 .stat-item {
   text-align: center;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 10px;
   padding: 10px 14px 8px;
   min-width: 70px;
-  transition: background 0.3s;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+  transition: all 0.25s ease;
+}
+
+.stat-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+}
+
+.stat-item-out::before {
+  background: linear-gradient(90deg, #4ade80, #22c55e);
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.3);
+}
+
+.stat-item-in::before {
+  background: linear-gradient(90deg, #60a5fa, #3b82f6);
+  box-shadow: 0 0 8px rgba(96, 165, 250, 0.3);
+}
+
+.stat-item-missed::before {
+  background: linear-gradient(90deg, #f87171, #ef4444);
+  box-shadow: 0 0 8px rgba(248, 113, 113, 0.3);
 }
 
 .stat-item:hover {
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
 }
 
 .stat-value {
   display: block;
+  font-family: 'Russo One', sans-serif;
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 400;
   color: #e2e8f0;
 }
 
@@ -357,8 +447,9 @@
 
 .stat-label {
   display: block;
-  font-size: 10px;
-  color: #64748b;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 9px;
+  color: #475569;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   margin-top: 2px;
@@ -367,12 +458,13 @@
 
 .stat-minutes {
   display: block;
+  font-family: 'Chakra Petch', sans-serif;
   font-size: 10px;
-  color: #8892b0;
+  color: #64748b;
   margin-top: 6px;
   font-weight: 600;
   padding-top: 5px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* Podium Bars */
@@ -383,9 +475,28 @@
   align-items: flex-start;
   justify-content: center;
   padding-top: 16px;
-  font-weight: 700;
+  font-family: 'Russo One', sans-serif;
+  font-weight: 400;
   font-size: 20px;
   letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.podium-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+  animation: shimmer 5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { left: -100%; }
+  50% { left: 150%; }
 }
 
 .gold-bar {
@@ -419,14 +530,39 @@
 .signage-footer {
   z-index: 1;
   display: flex;
-  gap: 24px;
-  color: #475569;
-  font-size: 13px;
-  margin-top: 20px;
+  gap: 20px;
+  align-items: center;
+  color: #334155;
+  font-size: 12px;
+  margin-top: 16px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.footer-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #334155;
 }
 
 .auto-refresh {
-  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.refresh-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
 }
 
 /* Loading */
@@ -440,6 +576,18 @@
 @keyframes pulse-text {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .particle, .crown, .gold-spot, .gold-ring,
+  .podium-bar::after, .refresh-dot, .signage-loading {
+    animation: none;
+  }
+  .podium-spot {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 /* Responsive */

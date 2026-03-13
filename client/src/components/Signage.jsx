@@ -3,6 +3,14 @@ import { startOfDay, endOfDay, startOfWeek, startOfMonth } from 'date-fns';
 import { fetchCallLog } from '../api/client';
 import './Signage.css';
 
+function formatDuration(minutes) {
+  if (!minutes) return '0m';
+  const h = Math.floor(minutes / 60);
+  const m = Math.round(minutes % 60);
+  if (h > 0) return `${h}h ${m}m`;
+  return `${m}m`;
+}
+
 // Profile pictures
 const AVATARS = {
   'Suvash': '/avatars/suvash.webp',
@@ -34,6 +42,7 @@ export default function Signage() {
   const [period, setPeriod] = useState('today');
   const [stats, setStats] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
+  const [clock, setClock] = useState(new Date());
 
   async function loadData() {
     try {
@@ -51,6 +60,12 @@ export default function Signage() {
     const interval = setInterval(loadData, 5 * 60 * 1000); // refresh every 5 min
     return () => clearInterval(interval);
   }, [period]);
+
+  // Live clock
+  useEffect(() => {
+    const tick = setInterval(() => setClock(new Date()), 1000);
+    return () => clearInterval(tick);
+  }, []);
 
   if (!stats) {
     return (
@@ -82,6 +97,7 @@ export default function Signage() {
         <div className="signage-title-group">
           <h1 className="signage-title">CM Call Leaderboard</h1>
           <p className="signage-subtitle">Candidate Manager Performance Rankings</p>
+          <div className="signage-clock">{clock.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</div>
         </div>
         <div className="signage-period-tabs">
           {PERIOD_OPTIONS.map((opt) => (
@@ -110,18 +126,18 @@ export default function Signage() {
           <div className="medal-label silver-label">SILVER</div>
           <h2 className="podium-name">{silver?.name}</h2>
           <div className="podium-minutes silver-minutes">
-            {silver?.totalMinutes?.toFixed(1)} <span className="min-label">min</span>
+            {formatDuration(silver?.totalMinutes)}
           </div>
           <div className="podium-stats">
             <div className="stat-item stat-item-out">
               <span className="stat-value">{silver?.outgoing}</span>
-              <span className="stat-label">Out</span>
-              <span className="stat-minutes">{silver?.outgoingMinutes?.toFixed(1)} min</span>
+              <span className="stat-label">Outgoing</span>
+              <span className="stat-minutes">{formatDuration(silver?.outgoingMinutes)}</span>
             </div>
             <div className="stat-item stat-item-in">
               <span className="stat-value">{silver?.incoming}</span>
-              <span className="stat-label">In</span>
-              <span className="stat-minutes">{silver?.incomingMinutes?.toFixed(1)} min</span>
+              <span className="stat-label">Incoming</span>
+              <span className="stat-minutes">{formatDuration(silver?.incomingMinutes)}</span>
             </div>
             <div className="stat-item stat-item-missed">
               <span className="stat-value">{silver?.missed}</span>
@@ -147,18 +163,18 @@ export default function Signage() {
           <div className="medal-label gold-label">GOLD</div>
           <h2 className="podium-name gold-name">{gold?.name}</h2>
           <div className="podium-minutes gold-minutes">
-            {gold?.totalMinutes?.toFixed(1)} <span className="min-label">min</span>
+            {formatDuration(gold?.totalMinutes)}
           </div>
           <div className="podium-stats">
             <div className="stat-item stat-item-out">
               <span className="stat-value">{gold?.outgoing}</span>
-              <span className="stat-label">Out</span>
-              <span className="stat-minutes">{gold?.outgoingMinutes?.toFixed(1)} min</span>
+              <span className="stat-label">Outgoing</span>
+              <span className="stat-minutes">{formatDuration(gold?.outgoingMinutes)}</span>
             </div>
             <div className="stat-item stat-item-in">
               <span className="stat-value">{gold?.incoming}</span>
-              <span className="stat-label">In</span>
-              <span className="stat-minutes">{gold?.incomingMinutes?.toFixed(1)} min</span>
+              <span className="stat-label">Incoming</span>
+              <span className="stat-minutes">{formatDuration(gold?.incomingMinutes)}</span>
             </div>
             <div className="stat-item stat-item-missed">
               <span className="stat-value">{gold?.missed}</span>
@@ -183,18 +199,18 @@ export default function Signage() {
           <div className="medal-label bronze-label">BRONZE</div>
           <h2 className="podium-name">{bronze?.name}</h2>
           <div className="podium-minutes bronze-minutes">
-            {bronze?.totalMinutes?.toFixed(1)} <span className="min-label">min</span>
+            {formatDuration(bronze?.totalMinutes)}
           </div>
           <div className="podium-stats">
             <div className="stat-item stat-item-out">
               <span className="stat-value">{bronze?.outgoing}</span>
-              <span className="stat-label">Out</span>
-              <span className="stat-minutes">{bronze?.outgoingMinutes?.toFixed(1)} min</span>
+              <span className="stat-label">Outgoing</span>
+              <span className="stat-minutes">{formatDuration(bronze?.outgoingMinutes)}</span>
             </div>
             <div className="stat-item stat-item-in">
               <span className="stat-value">{bronze?.incoming}</span>
-              <span className="stat-label">In</span>
-              <span className="stat-minutes">{bronze?.incomingMinutes?.toFixed(1)} min</span>
+              <span className="stat-label">Incoming</span>
+              <span className="stat-minutes">{formatDuration(bronze?.incomingMinutes)}</span>
             </div>
             <div className="stat-item stat-item-missed">
               <span className="stat-value">{bronze?.missed}</span>
@@ -209,9 +225,13 @@ export default function Signage() {
 
       <footer className="signage-footer">
         {lastUpdated && (
-          <span>Last updated: {lastUpdated.toLocaleTimeString()}</span>
+          <span>Updated {lastUpdated.toLocaleTimeString()}</span>
         )}
-        <span className="auto-refresh">Auto-refreshes every 5 min</span>
+        <div className="footer-dot" />
+        <span className="auto-refresh">
+          <span className="refresh-dot" />
+          Live — refreshes every 5 min
+        </span>
       </footer>
     </div>
   );
