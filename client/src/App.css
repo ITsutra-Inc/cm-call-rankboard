@@ -1,0 +1,262 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* Header */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.app-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.refresh-btn {
+  padding: 8px 20px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.refresh-btn:hover {
+  background: #2563eb;
+}
+
+.refresh-btn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* Date Filter */
+.date-filter {
+  margin-bottom: 24px;
+}
+
+.date-filter-presets {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.preset-btn {
+  padding: 8px 16px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.preset-btn:hover {
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+
+.preset-btn.active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.date-filter-custom {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.date-filter-custom .react-datepicker-wrapper input {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 160px;
+}
+
+/* Meta */
+.meta-info {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 16px;
+}
+
+/* Summary Cards */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.summary-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #e2e8f0;
+}
+
+.card-outgoing { border-left-color: #3b82f6; }
+.card-incoming { border-left-color: #22c55e; }
+.card-missed { border-left-color: #ef4444; }
+.card-minutes { border-left-color: #8b5cf6; }
+
+.card-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.card-label {
+  font-size: 14px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* Table */
+.stats-table-wrapper {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
+  margin-bottom: 24px;
+}
+
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.stats-table th {
+  background: #f8fafc;
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 2px solid #e2e8f0;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.stats-table th:hover {
+  color: #3b82f6;
+}
+
+.sort-arrow {
+  font-size: 11px;
+}
+
+.stats-table td {
+  padding: 12px 16px;
+  font-size: 14px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.stats-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.stats-table tbody tr:nth-child(even) {
+  background: #fafbfc;
+}
+
+.stats-table tbody tr:nth-child(even):hover {
+  background: #f1f5f9;
+}
+
+.missed-highlight {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.no-data {
+  text-align: center;
+  color: #94a3b8;
+  padding: 40px 16px !important;
+}
+
+/* Chart */
+.chart-container {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+}
+
+.chart-container h3 {
+  font-size: 16px;
+  color: #475569;
+  margin-bottom: 16px;
+}
+
+/* Loading & Error */
+.loading {
+  text-align: center;
+  padding: 60px 0;
+  color: #64748b;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e2e8f0;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-banner {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.warning-banner {
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.loading-inline {
+  font-size: 13px;
+  color: #3b82f6;
+  margin-bottom: 8px;
+}
