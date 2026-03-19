@@ -2,16 +2,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Russo+One&display=swap');
 
 .signage {
+  width: 100vw;
   height: 100vh;
+  height: 100dvh;
   background: #020617;
   color: #fff;
   font-family: 'Chakra Petch', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fixed-size content canvas — JS scales this to fit any viewport */
+.signage-scaler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-  overflow: hidden;
   padding: 30px 20px;
+  z-index: 1;
 }
 
 /* Layered background with light sources */
@@ -590,16 +603,76 @@
   }
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-  .podium-section {
-    gap: 16px;
+/* Mobile — disable scaler, stack vertically */
+@media (max-width: 767px) {
+  .signage {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
   }
+
+  .signage-scaler {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+    padding: 20px 16px;
+  }
+
+  .signage-header {
+    margin-bottom: 20px;
+  }
+
   .signage-title {
-    font-size: 28px;
+    font-size: 24px;
+    letter-spacing: 2px;
   }
-  .podium-bar { width: 140px; }
-  .gold-bar { width: 160px; }
-  .avatar-ring { width: 100px; height: 100px; }
-  .gold-ring { width: 120px; height: 120px; }
+
+  .signage-subtitle {
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+  .period-tab {
+    font-size: 11px;
+    padding: 6px 16px;
+  }
+
+  .podium-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .gold-spot { order: -1; }
+  .silver-spot { order: 0; }
+  .bronze-spot { order: 1; }
+
+  .podium-bar { display: none; }
+
+  .podium-spot {
+    width: 100%;
+    max-width: 340px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 20px 16px;
+  }
+
+  .gold-spot {
+    border-color: rgba(255, 215, 0, 0.2);
+    background: rgba(255, 215, 0, 0.03);
+  }
+
+  .crown { font-size: 32px; }
+  .avatar-ring { width: 80px; height: 80px; }
+  .gold-ring { width: 100px; height: 100px; }
+  .podium-name { font-size: 18px; }
+  .gold-name { font-size: 20px; }
+  .podium-minutes { font-size: 28px; }
+  .gold-minutes { font-size: 34px; }
+
+  .signage-footer {
+    padding-bottom: 16px;
+  }
 }

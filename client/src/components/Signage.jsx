@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { startOfDay, endOfDay, startOfWeek, startOfMonth } from 'date-fns';
 import { fetchCallLog } from '../api/client';
 import './Signage.css';
@@ -43,6 +43,30 @@ export default function Signage() {
   const [stats, setStats] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
   const [clock, setClock] = useState(new Date());
+  const scalerRef = useRef(null);
+
+  // Auto-scale: measure the 1920px-wide content, then scale to fit any viewport
+  useEffect(() => {
+    function updateScale() {
+      const el = scalerRef.current;
+      if (!el) return;
+      if (window.innerWidth < 768) {
+        el.style.transform = 'none';
+        return;
+      }
+      // Use actual content height (scrollHeight) so nothing ever gets cropped
+      const contentHeight = Math.max(1080, el.scrollHeight);
+      const scaleX = window.innerWidth / 1920;
+      const scaleY = window.innerHeight / contentHeight;
+      const scale = Math.min(scaleX, scaleY);
+      const translateX = (window.innerWidth - 1920 * scale) / 2;
+      const translateY = (window.innerHeight - contentHeight * scale) / 2;
+      el.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    }
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, [stats]); // Re-run when stats load (scaler div doesn't exist until stats are ready)
 
   async function loadData() {
     try {
@@ -93,6 +117,7 @@ export default function Signage() {
         ))}
       </div>
 
+      <div className="signage-scaler" ref={scalerRef}>
       <header className="signage-header">
         <div className="signage-title-group">
           <h1 className="signage-title">CM Call Leaderboard</h1>
@@ -233,6 +258,7 @@ export default function Signage() {
           Live — refreshes every 5 min
         </span>
       </footer>
+      </div>
     </div>
   );
 }
